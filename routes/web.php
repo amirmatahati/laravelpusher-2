@@ -21,3 +21,5 @@ Route::get('/home', 'UpdateController@index')->name('home');
 Route::get('/updates', 'UpdateController@list');
 Route::post('/updates', 'UpdateController@create');
 Route::get('/updates/suggestions', 'UpdateController@userSuggestions');
+Route::post('/comment', 'UpdateController@createComment');
+Route::get('/comments/{id_update}', 'UpdateController@CommentList');

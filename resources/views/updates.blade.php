@@ -44,7 +44,6 @@
                     <small>Updates on the development of the community</small>
                 </div>
             </div>
-            <example :user="{{ auth()->user() }}" :user2="{{ $friend }}"></example>
             <Updates></Updates>
             <Suggestions></Suggestions>
         </main>

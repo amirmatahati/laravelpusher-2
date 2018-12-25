@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Update;
 use App\User;
-use Illuminate\Http\Request;
+use App\MComment;
+
 use App\Events\UpdateCreated;
 use App\Events\UserOnline;
+use App\Events\CommentUser;
 
 class UpdateController extends Controller
 {
@@ -17,15 +21,8 @@ class UpdateController extends Controller
 
     public function index()
     {
-        if(auth()->user()->id == 1) {
-            return view('updates', [
-                'friend' => User::find(2),
-            ]);
-        }
-        return view('updates', [
-            'friend' => User::find(1),
-        ]);
-        //return view('updates');
+        
+        return view('updates');
     }
 
     public function create(Request $request)
@@ -38,10 +35,29 @@ class UpdateController extends Controller
 
         return response()->json($update);
     }
+    public function createComment(Request $request)
+    {
+        //return response()->json($request->id_update);
+        $data = $request->validate(['text' => 'required|min:1|max:280|string', 'id_update' => 'required|min:1|max:280|integer']);
+        $comment = auth()->user()->comments()->save(new MComment($data))->load('user');
+
+        broadcast(new CommentUser($comment))->toOthers();
+        return response()->json($comment);
+
+    }
 
     public function list()
     {
         return response()->json(Update::latest()->with('user')->limit(15)->get());
+    }
+    public function CommentList($update_id)
+    {
+        $comment    = MComment::with('user')
+                    ->where('id_update', $update_id)
+                    ->limit(15)
+                    ->get();
+        return response()->json($comment);
+        //return response()->json(MComment::latest()->with('userUpdate')->limit(15)->get());
     }
 
     public function userSuggestions()

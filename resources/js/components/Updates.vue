@@ -4,7 +4,7 @@
         <div class="media text-muted pt-3" v-if="updates.length == 0">
             Loading updates...
         </div>
-        <div class="media text-muted pt-3 pb-3 border-bottom border-grey" v-else>
+        <div class="media text-muted pt-3 pb-3 border-bottom border-grey">
             <form class="form-inline" v-on:submit.prevent="addUpdate">
                 <div class="form-group mr-2">
                     <input type="text" class="form-control" v-model="update" placeholder="What's happening?">
@@ -14,10 +14,11 @@
         </div>
         <div class="media text-muted pt-3" v-for="update in updates" :key="update.id">
             <img :src="update.user.avatar" :alt="update.user.name" class="size-32 mr-2 rounded">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">{{ update.user.name }}</strong>
                 {{ update.text }}
-            </p>
+            <comments :myProp="update.id"></comments>            
+            </div>
         </div>
     </div>
 </template>
@@ -29,11 +30,13 @@ export default {
         return {
             update: '',
             updates: [],
+            
         }
     },
     mounted () {
         axios.get('./updates').then(res => (this.updates = res.data))
         Echo.private('updates').listen('UpdateCreated', r => this.updates.unshift(r.update))
+       
     },
     methods: {
         addUpdate () {
@@ -43,7 +46,8 @@ export default {
                     this.updates.unshift(res.data)
                 })
             }
-        }
+        },
+        
     }
 }
 </script>
