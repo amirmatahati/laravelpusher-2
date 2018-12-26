@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Update;
 use App\User;
-use App\MComment;
+use App\Comment;
 
 use App\Events\UpdateCreated;
 use App\Events\UserOnline;
@@ -39,7 +39,7 @@ class UpdateController extends Controller
     {
         //return response()->json($request->id_update);
         $data = $request->validate(['text' => 'required|min:1|max:280|string', 'id_update' => 'required|min:1|max:280|integer']);
-        $comment = auth()->user()->comments()->save(new MComment($data))->load('user');
+        $comment = auth()->user()->comments()->save(new Comment($data))->load('users');
 
         broadcast(new CommentUser($comment))->toOthers();
         return response()->json($comment);
@@ -50,14 +50,9 @@ class UpdateController extends Controller
     {
         return response()->json(Update::latest()->with('user')->limit(15)->get());
     }
-    public function CommentList($update_id)
+    public function CommentList(Request $request)
     {
-        $comment    = MComment::with('user')
-                    ->where('id_update', $update_id)
-                    ->limit(15)
-                    ->get();
-        return response()->json($comment);
-        //return response()->json(MComment::latest()->with('userUpdate')->limit(15)->get());
+        return response()->json(Comment::latest()->with('users')->where('id_update', $request->get('id_update'))->limit(15)->get());
     }
 
     public function userSuggestions()

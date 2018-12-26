@@ -1784,12 +1784,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Comment',
   http: {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   },
+  name: 'CommentUser',
   props: {
     myProp: {
       //type: Object,
@@ -1804,38 +1804,36 @@ __webpack_require__.r(__webpack_exports__);
       responseBrand: {},
       comment: [],
       text: '',
-      id_update: 0
+      id_update: 0,
+      cm: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('./comments/' + this.myProp).then(function (res) {
+    axios.post('./comments', {
+      id_update: this.myProp
+    }).then(function (res) {
       return _this.comment = res.data;
-    });
-    Echo.private('comment' + this.myProp).listen('Comment', function (r) {
-      return _this.comment.unshift(r.cm);
-    });
-  },
-  created: function created() {
-    var _this2 = this;
+    }); //Echo.private('comments').listen('CommentUser', rs => this.comments.unshift(rs.cm))
 
-    axios.get('./comments/' + this.myProp).then(function (response) {
-      _this2.comment = response.data;
+    Echo.private('comments.${id_update}').listen('CommentUser', function (e) {
+      console.log('oke');
     });
   },
   methods: {
     addComment: function addComment() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (this.text.trim() !== '') {
         axios.post('./comment', {
           text: this.text,
           id_update: this.myProp
         }).then(function (res) {
-          _this3.text = '';
+          _this2.text = '';
+          _this2.cm = '';
 
-          _this3.comment.unshift(res.data);
+          _this2.comment.unshift(res.data);
         });
       }
     }
@@ -65319,7 +65317,7 @@ var render = function() {
         return _c("div", { key: cm.id, staticClass: "media text-muted pt-3" }, [
           _c("img", {
             staticClass: "size-32 mr-2 rounded",
-            attrs: { src: cm.user.avatar, alt: cm.user.name }
+            attrs: { src: cm.users.avatar, alt: cm.users.name }
           }),
           _vm._v(" "),
           _c(
@@ -65330,7 +65328,7 @@ var render = function() {
             },
             [
               _c("strong", { staticClass: "d-block text-gray-dark" }, [
-                _vm._v(_vm._s(cm.user.name))
+                _vm._v(_vm._s(cm.users.name))
               ]),
               _vm._v("\n            " + _vm._s(cm.text) + "\n        ")
             ]
@@ -77651,10 +77649,10 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\laravelpusher-2\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\xampp\htdocs\laravelpusher-2\resources\sass\signin.scss */"./resources/sass/signin.scss");
-__webpack_require__(/*! D:\xampp\htdocs\laravelpusher-2\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\laravelpusher-2\resources\sass\updates.scss */"./resources/sass/updates.scss");
+__webpack_require__(/*! C:\xampp\htdocs\aplikasi1\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\aplikasi1\resources\sass\signin.scss */"./resources/sass/signin.scss");
+__webpack_require__(/*! C:\xampp\htdocs\aplikasi1\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\aplikasi1\resources\sass\updates.scss */"./resources/sass/updates.scss");
 
 
 /***/ })

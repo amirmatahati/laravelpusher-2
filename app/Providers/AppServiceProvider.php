@@ -15,6 +15,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        \Broadcast::routes(["middleware" => ["auth:api"]]);
+        require base_path('routes/channels.php');
     }
 
     /**

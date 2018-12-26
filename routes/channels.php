@@ -15,13 +15,16 @@ Broadcast::channel('updates', function ($user) {
     return auth()->check();
 });
 Broadcast::channel('comments', function ($user) {
-    return auth()->check();
+    return $user->toArray();
 });
+    /*
+Broadcast::channel('comments.{id_update}', function ($user, $id_update) {
+    return $user->id === $id_update;
+});
+*/ 
 Broadcast::channel('online', function ($user) {
     if (auth()->check()) {
         return $user->toArray();
     }
 });
-Broadcast::channel('chat', function ($user) {
-    return $user;
-});
+

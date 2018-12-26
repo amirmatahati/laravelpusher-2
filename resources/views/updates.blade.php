@@ -33,6 +33,7 @@
     </nav>
 
     <div id="app">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="nav-scroller bg-white shadow-sm clearfix">
             <OnlineList :me='@json(auth()->user()->toArray())'></OnlineList>
         </div>

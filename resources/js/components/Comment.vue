@@ -10,9 +10,9 @@
                     <b-button type="submit" size="sm" class="pull-right">Send</b-button>
                 </form>
         <div class="media text-muted pt-3" v-for="cm in comment" :key="cm.id">
-            <img :src="cm.user.avatar" :alt="cm.user.name" class="size-32 mr-2 rounded">
+            <img :src="cm.users.avatar" :alt="cm.users.name" class="size-32 mr-2 rounded">
             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">{{ cm.user.name }}</strong>
+                <strong class="d-block text-gray-dark">{{ cm.users.name }}</strong>
                 {{ cm.text }}
             </div>
         </div>
@@ -20,12 +20,12 @@
 </template>
 <script>
     export default {
-        name: 'Comment',
-		http: {
+        http: {
             headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
         },
+        name: 'CommentUser',
         props: {
            myProp: {
                //type: Object,
@@ -39,24 +39,24 @@
                 responseBrand: {},
                 comment:[],
                 text: '',
-                id_update: 0
+                id_update: 0,
+                cm: ''
             }
 		  },
 		mounted(){
-            axios.get('./comments/'+ this.myProp).then(res => (this.comment = res.data))
-            Echo.private('comment'+ this.myProp).listen('Comment', r => this.comment.unshift(r.cm))
-        },
-		created: function()
-        {
-            axios.get('./comments/'+ this.myProp ).then(response => {
-                this.comment = response.data
-    		});
+            axios.post('./comments', { id_update : this.myProp}).then(res => (this.comment = res.data))
+            //Echo.private('comments').listen('CommentUser', rs => this.comments.unshift(rs.cm))
+            Echo.private('comments.${id_update}').listen('CommentUser', (e) => {
+        console.log('oke');
+    });
+            
         },
 		methods:{
             addComment () {
             if (this.text.trim() !== '') {
                 axios.post('./comment', {text: this.text,id_update: this.myProp}).then(res => {
                     this.text = ''
+                    this.cm   = ''
                     this.comment.unshift(res.data)
                 })
             }
