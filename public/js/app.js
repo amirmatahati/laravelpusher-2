@@ -1811,15 +1811,14 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.post('./comments', {
+    axios.post('./comments-data', {
       id_update: this.myProp
     }).then(function (res) {
       return _this.comment = res.data;
-    }); //Echo.private('comments').listen('CommentUser', rs => this.comments.unshift(rs.cm))
-
-    Echo.private('comments.${id_update}').listen('CommentUser', function (e) {
-      console.log('oke');
     });
+    Echo.private('comments').listen('CommentUser', function (rs) {
+      return _this.comment.unshift(rs.comment);
+    }); //Echo.private('comments.${id_update}').listen('CommentUser', (e) => {console.log('oke');});
   },
   methods: {
     addComment: function addComment() {
@@ -2128,7 +2127,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     Echo.private('updates').listen('UpdateCreated', function (r) {
       return _this.updates.unshift(r.update);
-    });
+    }); //Echo.private('updates').listen('UpdateCreated', (e) => {console.log(e.update);});
   },
   methods: {
     addUpdate: function addUpdate() {
@@ -77188,7 +77187,7 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: '329abdbc4125dac47676',
+  key: 'd8af6d652fd742ae3f1d',
   cluster: 'ap1',
   encrypted: true
 });

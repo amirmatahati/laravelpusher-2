@@ -15,7 +15,7 @@ Broadcast::channel('updates', function ($user) {
     return auth()->check();
 });
 Broadcast::channel('comments', function ($user) {
-    return $user->toArray();
+    return auth()->check();
 });
     /*
 Broadcast::channel('comments.{id_update}', function ($user, $id_update) {

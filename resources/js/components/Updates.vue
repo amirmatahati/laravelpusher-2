@@ -36,7 +36,7 @@ export default {
     mounted () {
         axios.get('./updates').then(res => (this.updates = res.data))
         Echo.private('updates').listen('UpdateCreated', r => this.updates.unshift(r.update))
-       
+        //Echo.private('updates').listen('UpdateCreated', (e) => {console.log(e.update);});
     },
     methods: {
         addUpdate () {

@@ -32,7 +32,7 @@ class CommentUser implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        //return new PrivateChannel('comments');
-        return new PrivateChannel('comments.'.$this->comment->id_update);
+        return new PrivateChannel('comments');
+        //return new PrivateChannel('comments.'.$this->comment->id_update);
     }
 }

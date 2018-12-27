@@ -44,11 +44,9 @@
             }
 		  },
 		mounted(){
-            axios.post('./comments', { id_update : this.myProp}).then(res => (this.comment = res.data))
-            //Echo.private('comments').listen('CommentUser', rs => this.comments.unshift(rs.cm))
-            Echo.private('comments.${id_update}').listen('CommentUser', (e) => {
-        console.log('oke');
-    });
+            axios.post('./comments-data', { id_update : this.myProp}).then(res => (this.comment = res.data))
+            Echo.private('comments').listen('CommentUser', rs => this.comment.unshift(rs.comment))
+            //Echo.private('comments.${id_update}').listen('CommentUser', (e) => {console.log('oke');});
             
         },
 		methods:{

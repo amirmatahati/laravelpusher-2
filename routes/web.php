@@ -22,4 +22,4 @@ Route::get('/updates', 'UpdateController@list');
 Route::post('/updates', 'UpdateController@create');
 Route::get('/updates/suggestions', 'UpdateController@userSuggestions');
 Route::post('/comment', 'UpdateController@createComment');
-Route::post('/comments', 'UpdateController@CommentList');
+Route::post('/comments-data', 'UpdateController@CommentList');
