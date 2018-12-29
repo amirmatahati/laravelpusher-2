@@ -1,23 +1,31 @@
 <template>
-    <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <div id="csg">
         <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
         <div class="media text-muted pt-3" v-if="updates.length == 0">
             Loading updates...
         </div>
-        <div class="media text-muted pt-3 pb-3 border-bottom border-grey">
-            <form class="form-inline" v-on:submit.prevent="addUpdate">
-                <div class="form-group mr-2">
-                    <input type="text" class="form-control" v-model="update" placeholder="What's happening?">
+        <form class="form-inline" v-on:submit.prevent="addUpdate">
+            <div class="form-group mr-2">
+                <input type="text" class="form-control" v-model="update" placeholder="What's happening?">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        <div class="stat">
+            <div v-for="update in updates" :key="update.id">
+                <div class="head_box">
+                    <img :src="update.user.avatar" :alt="update.user.name" rounded>
+                    <label class="u_name">{{ update.user.name }}</label>
+                    <label class="u_date">{{ update.created_at | moment('timezone', 'Asia/Jakarta', 'LLLL ss') }}</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </form>
-        </div>
-        <div class="media text-muted pt-3" v-for="update in updates" :key="update.id">
-            <img :src="update.user.avatar" :alt="update.user.name" class="size-32 mr-2 rounded">
-            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">{{ update.user.name }}</strong>
-                {{ update.text }}
-            <comments :myProp="update.id"></comments>            
+                <p class="clearfix u_text">{{ update.text }}</p>
+                <div class="row col-sm-6">
+                    <div class="col-sm-6 d-flex justify-content-center">
+                        <i class="fas fa-thumbs-up"></i> &nbsp; Suka
+                    </div>
+                </div>
+                <div class="comment">
+                    <comments :myProp="update.id"></comments>
+                </div>
             </div>
         </div>
     </div>

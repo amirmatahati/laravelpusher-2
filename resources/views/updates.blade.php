@@ -7,7 +7,53 @@
     <title>Updytes | Home</title>
     <meta content="{{ csrf_token() }}" name="csrf-token">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/updates.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!--<link href="{{ asset('css/updates.css') }}" rel="stylesheet">-->
+    <style>
+        .updates .avatar {
+            border-radius: 50%;
+            text-indent: 1000px;
+            border-radius: 50%;
+            height: 34px;
+            line-height: 34px;
+            width: 34px;
+            border: 2px solid #fff;
+        }
+        .stat{
+            clear: box;
+            height: auto;
+            margin-bottom: 20px;
+            margin-top: 25px;
+        }
+        .stat .head_box{
+            height: 84px;
+        }
+        .stat .head_box img{
+            float: left;
+            width: 53px;
+            height: 53px;
+            margin-right: 11px;
+        }
+        .stat .head_box .u_date{
+            clear: both;
+            position: relative;
+            top: -31px;
+            float: left;
+            left: 61px;
+        }
+        .comment{
+            clear: both;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            height: auto;
+        }
+        .comment img{
+            float: left;
+            width: 53px;
+            height: 53px;
+            margin-right: 11px;
+        }
+    </style>
 </head>
 
 <body class="bg-light updates">
